@@ -24,6 +24,10 @@ module Humanizer
   def humanizer_correct_answer?
     humanizer_answer && humanizer_answers_for_id(humanizer_question_id).include?(humanizer_answer.mb_chars.downcase)
   end
+  
+  def get_correct_answer
+    humanizer_answers_for_id(humanizer_question_id).first
+  end
 
   private
   
@@ -41,7 +45,7 @@ module Humanizer
 
   def humanizer_answers_for_id(id)
     question = humanizer_questions[id.to_i]
-    Array(question["answer"] || question[:answers]).map { |a| a.to_s.mb_chars.downcase }
+    Array(question[:answer] || question[:answers]).map { |a| a.to_s.mb_chars.downcase }
   end
 
   def humanizer_check_answer
